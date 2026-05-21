@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CODM Checker | Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #111; color: #eee; }
+        .card { background: #1e1e2f; border: none; border-radius: 15px; box-shadow: 0 0 25px rgba(0,0,0,0.7); }
+        .table-dark { --bs-table-bg: #2a2a3b; }
+        .btn-outline-light:hover { background: #3a3a5a; }
+        .navbar { background: #222 !important; }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-dark"><div class="container"><span class="navbar-brand">⚡ Veltryx CODM Checker</span></div></nav>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-5">
+            <div class="card p-4">
+                <h4>🔑 Proxy Restock</h4>
+                <form method="POST" action="/add_proxy" class="input-group mb-3">
+                    <input type="text" class="form-control" name="proxy_string" placeholder="host:port:user:pass" required>
+                    <button class="btn btn-success" type="submit">Add</button>
+                </form>
+                <table class="table table-dark table-striped">
+                    <thead><tr><th>#</th><th>Proxy</th><th></th></tr></thead>
+                    <tbody>
+                        {% for p in proxies %}
+                        <tr>
+                            <td>{{ p.id }}</td>
+                            <td style="word-break: break-all;">{{ p.proxy_string }}</td>
+                            <td><a href="/delete_proxy/{{ p.id }}" class="btn btn-outline-danger btn-sm">✕</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <div class="card p-4">
+                <h4>📊 Global Statistics</h4>
+                <table class="table table-dark table-striped">
+                    <tr><th>Total Checked</th><td>{{ stats[0] }}</td></tr>
+                    <tr><th>✅ Valid</th><td>{{ stats[1] }}</td></tr>
+                    <tr><th>❌ Invalid</th><td>{{ stats[2] }}</td></tr>
+                    <tr><th>🧼 Clean</th><td>{{ stats[3] }}</td></tr>
+                    <tr><th>⚠️ Not Clean</th><td>{{ stats[4] }}</td></tr>
+                    <tr><th>🎮 Has CODM</th><td>{{ stats[5] }}</td></tr>
+                    <tr><th>📭 No CODM</th><td>{{ stats[6] }}</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
